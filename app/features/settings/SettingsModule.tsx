@@ -16,8 +16,7 @@ import {
   isSoundEnabled,
   setSoundEnabled,
   getSoundVolume,
-  setSoundVolume,
-  playButtonClick
+  setSoundVolume
 } from '@/app/services/interaction-sound';
 import { TelemetryEngine } from '@/app/services/telemetry/telemetry-engine';
 import type { DataProvenance, SensorDeviceDescriptor } from '@/app/types/telemetry';
@@ -52,10 +51,6 @@ export const SettingsModule: React.FC<SettingsModuleProps> = ({
   const handleVolumeChange = (newVol: number) => {
     setVolume(newVol);
     setSoundVolume(newVol);
-  };
-
-  const handleTestSound = () => {
-    playButtonClick(1.0);
   };
 
   const handleConnectEsp32 = () => {
@@ -126,7 +121,6 @@ export const SettingsModule: React.FC<SettingsModuleProps> = ({
                 <VitalisButton
                   size="sm"
                   variant="outline"
-                  onClick={handleTestSound}
                   disabled={!soundActive}
                   className="h-6 text-[10px]"
                 >
