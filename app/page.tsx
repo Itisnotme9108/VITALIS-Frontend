@@ -18,7 +18,7 @@ import { ResearchModule } from '@/app/features/research/ResearchModule';
 import { MissionModule } from '@/app/features/mission/MissionModule';
 import { SettingsModule } from '@/app/features/settings/SettingsModule';
 import { TelemetryEngine } from '@/app/services/telemetry/telemetry-engine';
-import { playButtonClick } from '@/app/services/interaction-sound';
+import { installInteractionSound } from '@/app/services/interaction-sound';
 import { registerAtlasTools } from '@/app/agent-tools';
 import {
   DEFAULT_VISIBLE,
@@ -60,6 +60,9 @@ export default function VitalisApp() {
   const telemetry = useMemo(() => TelemetryEngine.getInstance(), []);
   const [snapshot, setSnapshot] = useState<PhysiologicalSnapshot>(() => telemetry.getSnapshot());
   const [provenance, setProvenance] = useState<DataProvenance>(() => telemetry.getProvenance());
+
+  // Install delegated audio feedback for all real button activations.
+  useEffect(() => installInteractionSound(), []);
 
   // Subscribe to Telemetry updates
   useEffect(() => {
@@ -330,12 +333,10 @@ export default function VitalisApp() {
         <LeftNavigation
           activeSection={activeSection}
           onSelectSection={(id) => {
-            playButtonClick(0.9);
             setActiveSection(id);
           }}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => {
-            playButtonClick(0.8);
             setSidebarCollapsed((prev) => !prev);
           }}
         />
