@@ -40,7 +40,7 @@ export const CompatibilityRestrictedPage: React.FC<CompatibilityRestrictedPagePr
   const { diagnostics, minRequiredWidth, minRequiredHeight, reasons } = result;
 
   return (
-    <div className="min-h-screen w-full bg-[#040711] text-slate-100 font-mono select-none flex flex-col justify-between p-4 sm:p-6 md:p-10 relative overflow-y-auto vitalis-grid-bg">
+    <div className="min-h-screen w-full bg-[#040711] text-slate-100 font-mono select-none flex flex-col justify-between p-4 sm:p-6 md:p-10 relative vitalis-grid-bg">
       {/* Precision corner brackets on entire screen */}
       <span className="fixed top-3 left-3 w-4 h-4 border-t border-l border-cyan-400/50 pointer-events-none" />
       <span className="fixed top-3 right-3 w-4 h-4 border-t border-r border-cyan-400/50 pointer-events-none" />
@@ -177,12 +177,11 @@ export const CompatibilityRestrictedPage: React.FC<CompatibilityRestrictedPagePr
               <div>
                 <span className="text-[9px] text-slate-400 block uppercase">CURRENT VIEWPORT</span>
                 <span
-                  className={`font-bold tabular-nums ${
-                    diagnostics.viewportWidth < minRequiredWidth ||
+                  className={`font-bold tabular-nums ${diagnostics.viewportWidth < minRequiredWidth ||
                     diagnostics.viewportHeight < minRequiredHeight
-                      ? 'text-rose-400'
-                      : 'text-emerald-400'
-                  }`}
+                    ? 'text-rose-400'
+                    : 'text-emerald-400'
+                    }`}
                 >
                   {diagnostics.viewportWidth} × {diagnostics.viewportHeight} px
                 </span>
@@ -208,8 +207,8 @@ export const CompatibilityRestrictedPage: React.FC<CompatibilityRestrictedPagePr
                   {diagnostics.hasFinePointer
                     ? 'Fine Pointer (Mouse)'
                     : diagnostics.isTouchCapable
-                    ? 'Touch / Coarse'
-                    : 'Standard'}
+                      ? 'Touch / Coarse'
+                      : 'Standard'}
                 </span>
               </div>
             </div>
