@@ -1,5 +1,4 @@
 import React from 'react';
-import { playButtonClick } from '@/app/services/interaction-sound';
 
 export interface VitalisButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'cyan';
@@ -25,24 +24,6 @@ export const VitalisButton = React.forwardRef<HTMLButtonElement, VitalisButtonPr
     },
     ref
   ) => {
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (disabled) return;
-      playButtonClick(soundScale);
-      if (onClick) {
-        onClick(e);
-      }
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      if (disabled) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        playButtonClick(soundScale);
-      }
-      if (props.onKeyDown) {
-        props.onKeyDown(e);
-      }
-    };
-
     const baseStyles =
       'relative inline-flex items-center justify-center font-mono font-medium text-xs tracking-wider uppercase transition-colors select-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-none border';
 
@@ -76,8 +57,7 @@ export const VitalisButton = React.forwardRef<HTMLButtonElement, VitalisButtonPr
       <button
         ref={ref}
         disabled={disabled}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
+        onClick={onClick}
         className={`${baseStyles} ${sizeStyles} ${variantStyles} ${activeStyles} ${className}`}
         {...props}
       >
