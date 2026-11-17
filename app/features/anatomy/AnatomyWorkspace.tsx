@@ -161,7 +161,7 @@ export const AnatomyWorkspace: React.FC<AnatomyWorkspaceProps> = ({
           state={state}
           onSelect={onSelectPartId}
           onProgress={() => {}}
-          onError={(message) => console.error('[VITALIS Human Atlas]', message)}
+          onError={() => {}}
           torsoFocusTrigger={torsoTrigger}
         />
       )}
