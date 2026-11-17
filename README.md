@@ -51,6 +51,13 @@ Every physiological measurement is explicitly labeled with verified data provena
 - `[SAMPLE]`: Static clinical baseline research record.
 - `[UNAVAILABLE]`: Sensor disconnected.
 
+### 6. Device Compatibility Gate
+- **Pre-flight Environmental Assessment:** Evaluates viewport geometry, physical screen constraints, pointer fine/coarse capabilities, and touch parameters before initializing or mounting the main dashboard.
+- **Minimum Workspace Thresholds:** Requires at least $1024 \times 640\text{ px}$ of unscaled display workspace to host dual-sidebar navigation, dense multi-lead ECG streams, and the 3D anatomical viewer.
+- **Mobile & Desktop-Mode Heuristics:** Detects conventional smartphones as well as mobile devices requesting "Desktop Site" mode via physical dimension bounds (`minScreenDimension < 540px`).
+- **Touchscreen Desktop Support:** Touch capability alone does not restrict a device; touchscreen laptops and workstations with precision pointers and adequate resolution are fully supported.
+- **Zero-Overhead Gating:** When access is restricted, the Human Atlas 3D models, Three.js engine, and telemetry generators are never imported or executed, preserving network bandwidth and battery life.
+
 ---
 
 ## Architecture Overview
@@ -58,6 +65,11 @@ Every physiological measurement is explicitly labeled with verified data provena
 ```
 VITALIS/
 ├── app/
+│   ├── compatibility/           # Device Compatibility Gate
+│   │   ├── compatibility-types.ts # Diagnostics, reason codes, status types
+│   │   ├── device-compatibility.ts# Multi-signal heuristic assessment logic
+│   │   ├── CompatibilityGate.tsx  # Application-level entry gatekeeper (lazy loads app)
+│   │   └── CompatibilityRestrictedPage.tsx # Standalone workstation required screen
 │   ├── components/
 │   │   ├── common/              # VitalisButton, TechnicalPanel, MetricTile, ProvenanceBadge
 │   │   ├── header/              # TopHeader (Branding, MET, Provenance, Audio toggle, CMO)
@@ -98,7 +110,8 @@ VITALIS/
 │   └── ATTRIBUTION.md           # Dataset attribution (CC BY 4.0)
 └── scripts/
     ├── validate-atlas.mjs       # Mesh, triangle, and concept integrity test
-    └── validate-interactions.mjs# Exploded packing & tap disambiguation test
+    ├── validate-interactions.mjs# Exploded packing & tap disambiguation test
+    └── validate-compatibility.mjs # Multi-signal device compatibility test suite
 ```
 
 ---
@@ -128,7 +141,8 @@ This runs:
 1. `npm run check` (TypeScript static type checking across all files)
 2. `node scripts/validate-atlas.mjs` (Verifies all 2,234 meshes, 3,432 concepts, 2,288,268 triangles, and binary buffers)
 3. `node scripts/validate-interactions.mjs` (Verifies non-overlapping exploded packing, search contracts, and tap-versus-drag disambiguation)
-4. `npm run build` (Full Vite production bundle creation in `dist/`)
+4. `node scripts/validate-compatibility.mjs` (Verifies 10 device compatibility scenarios: desktop, laptop, touchscreen, phone, tablet, mobile desktop mode, window resizing)
+5. `npm run build` (Full Vite production bundle creation in `dist/`)
 
 ---
 

@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import VitalisApp from '../app/page';
+import { CompatibilityGate } from '../app/compatibility';
 import '../app/globals.css';
 
-createRoot(document.getElementById('root')!).render(<VitalisApp />);
+createRoot(document.getElementById('root')!).render(<CompatibilityGate />);

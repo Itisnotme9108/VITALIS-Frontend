@@ -13,7 +13,8 @@
     "check": "tsc --noEmit",
     "validate:atlas": "node scripts/validate-atlas.mjs",
     "validate:interactions": "node scripts/validate-interactions.mjs",
-    "validate": "npm run check && npm run validate:atlas && npm run validate:interactions && npm run build"
+    "validate:compatibility": "node scripts/validate-compatibility.mjs",
+    "validate": "npm run check && npm run validate:atlas && npm run validate:interactions && npm run validate:compatibility && npm run build"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
